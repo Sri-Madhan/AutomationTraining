@@ -180,3 +180,6 @@ hs_err_pid*
 
 #vs code
 /.vscode
+
+# logs
+/logs
