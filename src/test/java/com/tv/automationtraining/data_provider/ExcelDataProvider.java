@@ -14,10 +14,8 @@ public class ExcelDataProvider {
     @DataProvider(name = "excelData")
     public Object[][] excelDataProvider() throws IOException {
 
-        Object[][] arrObj = getExcelData(
-                "H:\\Github\\QA_WinAutomation(Maven)\\appiumTemplateQA\\src\\main\\java\\DataProvider\\TestData.xlsx",
-                "Sheet2");
-        // System.out.println(arrObj[0][0]);
+        Object[][] arrObj = getExcelData("src/test/java/com/tv/automationtraining/resources/testdata/TestData.xlsx",
+                "LoginScreen");
         return arrObj;
     }
 
@@ -39,13 +37,13 @@ public class ExcelDataProvider {
                     row = sheet.getRow(i);
                     cell = row.getCell(j);
                     data[i - 1][j] = cell.getStringCellValue();
-                    // System.out.println(cell.getStringCellValue());
                 }
             }
+            workbook.close();
+            fis.close();
         } catch (Exception e) {
             System.out.println("The exception is: " + e.getMessage());
         }
-        // System.out.println(data[0][0]);
         return data;
     }
 

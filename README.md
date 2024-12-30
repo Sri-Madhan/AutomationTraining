@@ -33,9 +33,10 @@ This project is a robust mobile automation testing framework built using Appium 
 - Separate XML files for Regression and Smoke test suites.
 - Allows for easy management and execution of different types of test runs.
 
-### 8. Maven Integration
-- Project uses Maven for dependency management and build automation.
-- POM file configured with necessary dependencies and plugins.
+### 8. Data-Driven Testing with Excel
+- Supports data-driven testing using Excel files.
+- Custom `ExcelDataProvider` class to read test data from Excel sheets.
+- Allows easy management and updates of test data without changing the code.
 
 ### 9. Customizable Waits
 - Implementation of explicit waits for better handling of dynamic elements.

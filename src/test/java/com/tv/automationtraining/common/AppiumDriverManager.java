@@ -14,9 +14,11 @@ public class AppiumDriverManager {
     private static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
 
 
-    public AppiumDriver setup(String platformName) throws Exception {
+    public AppiumDriver setup(String platformName) {
 
         File app = null;
+
+        try {
 
         // Define the app path based on platform
         if (platformName.equalsIgnoreCase("android")) {
@@ -48,8 +50,12 @@ public class AppiumDriverManager {
                     .amend("appium:app", app.getAbsolutePath());
             driver.set(new IOSDriver(new URL("http://127.0.0.1:4723"), options));
         }
-        LogAndReportUtils.logAndReportInfo("Driver initiated with "+platformName);
-        return driver.get();
+            LogAndReportUtils.logAndReportInfo("Driver initiated with "+platformName);
+            return driver.get();
+        } catch (Exception e) {
+            LogAndReportUtils.logAndReportFail("Failed to initiate driver", e);
+            return null;
+        }
     }
 
     public static AppiumDriver getDriver() {
@@ -57,10 +63,15 @@ public class AppiumDriverManager {
     }
    
     public void quitDriver() {
-        if (driver.get() != null) {
-            driver.get().quit();
-            driver.remove();
-            LogAndReportUtils.logAndReportInfo("Driver closed");
+        try {
+            if (driver.get() != null) {
+                driver.get().quit();
+                driver.remove();
+                LogAndReportUtils.logAndReportInfo("Driver closed");
+            }  
+        } catch (Exception e) {
+            LogAndReportUtils.logAndReportFail("Failed to close driver", e);
         }
+        
     }
 }

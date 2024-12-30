@@ -11,6 +11,7 @@
         </groups>
         <classes>
             <class name="com.tv.automationtraining.test.HomeScreenTest"/>
+            <class name="com.tv.automationtraining.test.LoginScreenTest"/>
         </classes>
     </test>
 </suite>
