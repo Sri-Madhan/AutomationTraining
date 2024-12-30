@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Regression Suite" parallel="false">
+    <parameter name="platform" value="android" />
+
+    <!-- Test Suite for Regression Tests -->
+    <test name="Regression Tests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.tv.automationtraining.test.HomeScreenTest"/>
+        </classes>
+    </test>
+</suite>
