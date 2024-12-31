@@ -10,6 +10,14 @@ pipeline {
     }
 
     stages {
+
+        stage('Clean Workspace') {
+            steps {
+                echo "Cleaning up workspace before starting the build."
+                deleteDir()  
+            }
+        }
+
         stage('Checkout') {
             steps {
                 echo "Checking out code from the repository"
@@ -37,10 +45,21 @@ pipeline {
 
         stage('Zip Test Reports') {
             steps {
-                echo "Zipping the test reports..."
-                sh """
-                    zip -r test-reports.zip test-output/extent-reports
-                """
+                echo "Zipping the test reports, console log, and application logs..."
+
+                script {
+                    def buildConsoleLog = "${env.WORKSPACE}/build-console.log"
+                    def appLogFile = "log/app.log"
+                    def zipFile = "build-reports.zip"
+
+                    sh """
+                        # Capture the Jenkins build console output
+                        cat ${env.BUILD_URL}consoleText > ${buildConsoleLog}
+
+                        # Zip the relevant files: Test reports, console log, and app.log
+                        zip -r ${zipFile} test-outputs/extentreport ${buildConsoleLog} ${appLogFile}
+                    """
+                }
             }
         }
     }
@@ -51,7 +70,7 @@ pipeline {
             subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: "The build and tests have completed successfully.\n\nYou can check the build details here: ${env.BUILD_URL}",
             to: "srimadhan218@gmail.com",  
-            attachmentsPattern: 'test-reports.zip'
+            attachmentsPattern: 'build-reports.zip'
         )
     }
     failure {
@@ -59,7 +78,7 @@ pipeline {
             subject: "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: "The build has failed. Please check the logs for details.\n\nBuild URL: ${env.BUILD_URL}",
             to: "srimadhan218@gmail.com", 
-            attachmentsPattern: 'test-reports.zip'
+            attachmentsPattern: 'build-reports.zip'
         )
     }
 }
