@@ -25,14 +25,14 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                echo "Building the application"
-                withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
-                    sh 'mvn clean install -P${PROFILE}' 
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         echo "Building the application"
+        //         withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
+        //             sh 'mvn clean install -P${PROFILE}' 
+        //         }
+        //     }
+        // }
 
         stage('Test') {
             steps {
@@ -53,11 +53,9 @@ pipeline {
                     def zipFile = "build-reports.zip"
 
                     sh """
-                        # Capture the Jenkins build console output
-                        cat ${env.BUILD_URL}console > ${buildConsoleLog}
+                        # cat ${env.BUILD_URL}console > ${buildConsoleLog}
 
-                        # Zip the relevant files: Test reports, console log, and app.log
-                        zip -r ${zipFile} test-outputs/extentreport ${buildConsoleLog} ${appLogFile}
+                        zip -r ${zipFile} test-outputs/extentreport ${appLogFile}
                     """
                 }
             }
