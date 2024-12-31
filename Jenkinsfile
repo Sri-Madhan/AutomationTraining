@@ -43,13 +43,6 @@ pipeline {
                 """
             }
         }
-
-        // stage('Deploy') {
-        //     steps {
-        //         echo "Deploying application"
-        //         sh './deploy.sh'  // Custom deploy script
-        //     }
-        // }
     }
 
     post {

@@ -45,6 +45,12 @@ This project is a robust mobile automation testing framework built using Appium 
 ### 10. Assertion Handling
 - Custom assertion method with integrated logging and reporting.
 
+### 11. CI/CD Integration with Jenkins
+- Jenkinsfile for automated build and test execution.
+- Parameterized builds allowing choice between Smoke and Regression tests.
+- Automated email notifications with build status and test reports.
+
+
 ## Project Structure
 - `src/main/java`: Contains main source code
 - `src/test/java`: Contains test classes
@@ -57,10 +63,25 @@ This project is a robust mobile automation testing framework built using Appium 
 2. Clone the repository.
 
 ## Running Tests
-- For regression tests: `mvn test -PRegression`
-- For smoke tests: `mvn test -PSmoke`
+- Locally:
+  - For regression tests: `mvn test -PRegression`
+  - For smoke tests: `mvn test -PSmoke`
+- Via Jenkins:
+  - Create a new pipeline job in Jenkins.
+  - Configure the job to use the Jenkinsfile from the repository.
+  - Run the job, selecting the desired test profile (Smoke or Regression).
+
+## Jenkins Pipeline
+- The Jenkinsfile defines a pipeline with stages for checkout, build, test, and report generation.
+- It uses a parameterized build to choose between Smoke and Regression tests.
+- After test execution, it zips the test reports and sends them via email.
+
+## Email Notifications
+- Uses the Email Extension plugin in Jenkins.
+- Sends emails with build status (success/failure) and test reports.
+- Configure the recipient email address in the Jenkinsfile.
+- For sending emails, use an app password for the sender's email account for enhanced security.
 
 ## Customization
 - Modify `BaseClass` to add or update common utilities.
-- Update `pom.xml` for adding new dependencies or plugins.
 - Adjust `log4j2.xml` for customizing logging behavior.
