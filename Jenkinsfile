@@ -13,14 +13,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checking out code from the repository"
-                git 'https://github.com/Sri-Madhan/AutomationTraining.git'
+                git branch: 'main', url: 'https://github.com/Sri-Madhan/AutomationTraining.git'
             }
         }
 
         stage('Build') {
             steps {
                 echo "Building the application"
-                // Set the PATH environment variable for the shell command execution
                 withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
                     sh 'mvn clean install -P${PROFILE}' 
                 }
