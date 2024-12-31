@@ -19,10 +19,11 @@ pipeline {
 
         stage('Build') {
             steps {
-                
                 echo "Building the application"
+                // Set the PATH environment variable for the shell command execution
                 withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
                     sh 'mvn clean install -P${PROFILE}' 
+                }
             }
         }
 
@@ -30,7 +31,8 @@ pipeline {
             steps {
                 echo "Running tests for profile: ${PROFILE}"
                 withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
-                    sh 'mvn clean install -P${PROFILE}'  
+                    sh "mvn test -P${PROFILE}"  
+                }
             }
         }
 
