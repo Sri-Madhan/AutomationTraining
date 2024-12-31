@@ -19,15 +19,18 @@ pipeline {
 
         stage('Build') {
             steps {
+                
                 echo "Building the application"
-                sh 'mvn clean install -P${PROFILE}' 
+                withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
+                    sh 'mvn clean install -P${PROFILE}' 
             }
         }
 
         stage('Test') {
             steps {
                 echo "Running tests for profile: ${PROFILE}"
-                sh "mvn test -P${PROFILE}"  
+                withEnv(["PATH+EXTRA=/usr/local/bin", "PROFILE=${PROFILE}"]) {
+                    sh 'mvn clean install -P${PROFILE}'  
             }
         }
 
