@@ -55,7 +55,7 @@ pipeline {
                     sh """
                         # cat ${env.BUILD_URL}console > ${buildConsoleLog}
 
-                        zip -r ${zipFile} test-outputs/extentreport ${appLogFile}
+                        zip -r ${zipFile} test-output/extent-reports ${appLogFile}
                     """
                 }
             }
