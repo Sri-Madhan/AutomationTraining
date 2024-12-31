@@ -54,7 +54,7 @@ pipeline {
 
                     sh """
                         # Capture the Jenkins build console output
-                        cat ${env.BUILD_URL}consoleText > ${buildConsoleLog}
+                        cat ${env.BUILD_URL}console > ${buildConsoleLog}
 
                         # Zip the relevant files: Test reports, console log, and app.log
                         zip -r ${zipFile} test-outputs/extentreport ${buildConsoleLog} ${appLogFile}
